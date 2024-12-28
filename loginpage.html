@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AnimeWear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #131213 0%, #101010 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff4757, #ff6b6b);
+        }
+
+        .anime-character {
+            position: absolute;
+            bottom: 0;
+            right: -50px;
+            width: 200px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #ddd;
+            border-radius: 0;
+            padding: 0.75rem 0;
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #764ba2;
+            background: transparent;
+        }
+
+        .form-label {
+            color: #666;
+            transform: translateY(0);
+            transition: all 0.3s;
+        }
+
+        .form-floating>.form-control:focus~label,
+        .form-floating>.form-control:not(:placeholder-shown)~label {
+            color: #764ba2;
+        }
+
+        .btn-login {
+            background: linear-gradient(90deg, #ff4757, #ff6b6b);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .social-login {
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .google-btn {
+            background: #DB4437;
+        }
+
+        .facebook-btn {
+            background: #4267B2;
+        }
+
+        .twitter-btn {
+            background: #1DA1F2;
+        }
+
+        .toggle-form {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .toggle-form:hover {
+            /* color: #ff4757; */
+        }
+
+        .error-message {
+            color: #ff4757;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+
+        .remember-me {
+            color: #666;
+        }
+
+        .form-check-input:checked {
+            background-color: #764ba2;
+            border-color: #764ba2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-container p-5">
+                    <img src="https://via.placeholder.com/200" alt="Anime Character" class="anime-character">
+
+                    <!-- Login Form -->
+                    <div class="form-section active" id="loginForm">
+                        <h2 class="text-center mb-4">Welcome Back!</h2>
+                        <form id="login">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                                <label for="loginEmail">Email address</label>
+                                <div class="error-message" id="loginEmailError"></div>
+                            </div>
+                            <div class="form-floating mb-3 position-relative">
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                                <label for="loginPassword">Password</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword')"></i>
+                                <div class="error-message" id="loginPasswordError"></div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label remember-me" for="rememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <a href="#" class="toggle-form">Forgot Password?</a>
+                            </div>
+                            <button type="submit" class="btn btn-login w-100 mb-3">Sign In</button>
+                            <p class="text-center mb-0">
+                                Don't have an account?
+                                <a href="#" class="toggle-form" onclick="toggleForms()">Sign Up</a>
+                            </p>
+                        </form>
+
+                        <div class="social-login text-center">
+                            <p class="text-muted mb-3">Or sign in with</p>
+                            <a href="#" class="social-btn google-btn"><i class="fab fa-google"></i></a>
+                            <a href="#" class="social-btn facebook-btn"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-btn twitter-btn"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div class="form-section" id="registerForm">
+                        <h2 class="text-center mb-4">Create Account</h2>
+                        <form id="register">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="registerName" placeholder="Full Name">
+                                <label for="registerName">Full Name</label>
+                                <div class="error-message" id="registerNameError"></div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="registerEmail"
+                                    placeholder="name@example.com">
+                                <label for="registerEmail">Email address</label>
+                                <div class="error-message" id="registerEmailError"></div>
+                            </div>
+                            <div class="form-floating mb-3 position-relative">
+                                <input type="password" class="form-control" id="registerPassword"
+                                    placeholder="Password">
+                                <label for="registerPassword">Password</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('registerPassword')"></i>
+                                <div class="error-message" id="registerPasswordError"></div>
+                            </div>
+                            <div class="form-floating mb-4 position-relative">
+                                <input type="password" class="form-control" id="confirmPassword"
+                                    placeholder="Confirm Password">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword')"></i>
+                                <div class="error-message" id="confirmPasswordError"></div>
+                            </div>
+                            <button type="submit" class="btn btn-login w-100 mb-3">Sign Up</button>
+                            <p class="text-center mb-0">
+                                Already have an account?
+                                <a href="#" class="toggle-form" onclick="toggleForms()">Sign In</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample user for testing
+        const sampleUser = {
+            email: 'raw@club.com',
+            password: 'password123'
+        };
+
+        // Toggle between login and register forms
+        function toggleForms() {
+            document.getElementById('loginForm').classList.toggle('active');
+            document.getElementById('registerForm').classList.toggle('active');
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.nextElementSibling;
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Login form submission
+        document.getElementById('login').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+            // Simple validation
+            if (email === sampleUser.email && password === sampleUser.password) {
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'alert alert-success text-center mb-3';
+                successMessage.textContent = 'Login successful! Redirecting to home page...';
+                document.getElementById('login').insertBefore(successMessage, document.querySelector('.btn-login'));
+
+                // Redirect to home page after 1 second
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                // Show error
+                document.getElementById('loginPasswordError').textContent = 'Invalid email or password';
+                document.getElementById('loginPasswordError').style.display = 'block';
+            }
+        });
+
+        // Register form submission
+        document.getElementById('register').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+            // Simple validation
+            let hasError = false;
+
+            if (!name) {
+                document.getElementById('registerNameError').textContent = 'Name is required';
+                document.getElementById('registerNameError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (!email) {
+                document.getElementById('registerEmailError').textContent = 'Email is required';
+                document.getElementById('registerEmailError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (password.length < 8) {
+                document.getElementById('registerPasswordError').textContent = 'Password must be at least 8 characters';
+                document.getElementById('registerPasswordError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (!hasError) {
+                // Successful registration
+                alert('Registration successful! Please login.');
+                toggleForms();
+            }
+        });
+    </script>
+</body>
+
+</html>

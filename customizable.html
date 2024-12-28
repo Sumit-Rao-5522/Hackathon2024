@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Anime T-Shirt</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        a:link,    /* Normal unvisited link */
+        a:visited, /* Visited link */
+        a:hover,   /* Link when hovered */
+        a:active { /* Link when clicked */
+            color: #1f1f1f; /* Replace with your desired color */
+            text-decoration: none; /* Optional: remove underline */
+        }
+
+        .preview-container {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            margin-bottom: 20px;
+        }
+        
+        .tshirt-preview {
+            max-width: 300px;
+            position: relative;
+        }
+        
+        .design-preview {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 150px;
+            max-height: 150px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px #ddd;
+        }
+        
+        .color-option.active {
+            box-shadow: 0 0 0 2px #007bff;
+        }
+        
+        .size-option {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .size-option.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .design-option {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .design-option img {
+            max-width: 100px;
+            height: auto;
+        }
+        
+        .design-option.active {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .customization-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .premium-features {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .feature-option {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid #dee2e6;
+        }
+
+        .feature-option:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .premium-price {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .feature-benefits {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 10px;
+        }
+
+        .feature-benefits li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #666;
+        }
+
+        .feature-benefits li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .form-check-input:checked ~ .feature-details {
+            display: block !important;
+        }
+
+        .form-check-input:checked + .form-check-label {
+            color: #007bff;
+        }
+
+        .feature-details {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <a href="index.html" class="btn btn-primary mb-4">← Back to Home</a>
+        
+        <h1 class="text-center mb-4">Customize Your Anime T-Shirt</h1>
+        
+        <div class="row">
+            <!-- Preview Section -->
+            <div class="col-md-6">
+                <div class="preview-container">
+                    <div class="tshirt-preview">
+                        <img src="public/images/NarutoMER3 (2).png" alt="T-Shirt Preview" class="img-fluid">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="price-tag mb-3">₹799</div>
+                    <button class="btn btn-primary btn-lg">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Customization Options -->
+            <div class="col-md-6">
+                <!-- Color Selection -->
+                <div class="customization-section">
+                    <h3>Select Color</h3>
+                    <div class="d-flex flex-wrap">
+                        <div class="color-option active" style="background-color: #000000;" title="Black"></div>
+                        <div class="color-option" style="background-color: #ffffff;" title="White"></div>
+                        <div class="color-option" style="background-color: #ff0000;" title="Red"></div>
+                        <div class="color-option" style="background-color: #0000ff;" title="Blue"></div>
+                        <div class="color-option" style="background-color: #00ff00;" title="Green"></div>
+                    </div>
+                </div>
+                
+                <!-- Size Selection -->
+                <div class="customization-section">
+                    <h3>Select Size</h3>
+                    <div class="d-flex flex-wrap">
+                        <div class="size-option">S</div>
+                        <div class="size-option active">M</div>
+                        <div class="size-option">L</div>
+                        <div class="size-option">XL</div>
+                        <div class="size-option">XXL</div>
+                    </div>
+                </div>
+                
+                <!-- Design Selection -->
+                <div class="customization-section">
+                    <h3>Select Design</h3>
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <div class="design-option active">
+                                <img src="public/images/NarutoMER6 (3).png" alt="Naruto Design">
+                                <p>Naruto</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="design-option">
+                                <img src="public/images/NarutoMER2 (1).png" alt="Dragon Ball Design">
+                                <p>Dragon Ball</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="design-option">
+                                <img src="public/images/NarutoMER5 (2).png" alt="One Piece Design">
+                                <p>One Piece</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Text -->
+                <div class="customization-section">
+                    <h3>Add Custom Text</h3>
+                    <input type="text" class="form-control" placeholder="Enter your text here">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Fabric Options -->
+                <div class="customization-section mb-4">
+                    <h3>Premium Fabric Options</h3>
+                    <div class="premium-features">
+                        <div class="feature-option mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hydrophobic">
+                                <label class="form-check-label d-flex justify-content-between align-items-center" for="hydrophobic">
+                                    <div>
+                                        <h5 class="mb-1">Hydrophobic Coating</h5>
+                                        <p class="text-muted mb-0">Water-resistant, stain-proof protection</p>
+                                    </div>
+                                    <span class="premium-price">+₹299</span>
+                                </label>
+                                <div class="feature-details mt-2 collapse">
+                                    <ul class="feature-benefits">
+                                        <li>Repels water and liquid stains</li>
+                                        <li>Easy to clean surface</li>
+                                        <li>Maintains fabric breathability</li>
+                                        <li>Lasts up to 30 washes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-option mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="antimicrobial">
+                                <label class="form-check-label d-flex justify-content-between align-items-center" for="antimicrobial">
+                                    <div>
+                                        <h5 class="mb-1">Antimicrobial Treatment</h5>
+                                        <p class="text-muted mb-0">Odor-resistant, hygienic protection</p>
+                                    </div>
+                                    <span class="premium-price">+₹199</span>
+                                </label>
+                                <div class="feature-details mt-2 collapse">
+                                    <ul class="feature-benefits">
+                                        <li>Prevents odor-causing bacteria</li>
+                                        <li>Stays fresh longer</li>
+                                        <li>Ideal for active wear</li>
+                                        <li>Lasts entire garment lifetime</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-option mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="premium-cotton">
+                                <label class="form-check-label d-flex justify-content-between align-items-center" for="premium-cotton">
+                                    <div>
+                                        <h5 class="mb-1">Premium Cotton Upgrade</h5>
+                                        <p class="text-muted mb-0">Imported Pima cotton, ultra-soft</p>
+                                    </div>
+                                    <span class="premium-price">+₹399</span>
+                                </label>
+                                <div class="feature-details mt-2 collapse">
+                                    <ul class="feature-benefits">
+                                        <li>Extra-long staple cotton fibers</li>
+                                        <li>Incredibly soft texture</li>
+                                        <li>Enhanced durability</li>
+                                        <li>Minimal shrinkage</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-option mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="uv-protection">
+                                <label class="form-check-label d-flex justify-content-between align-items-center" for="uv-protection">
+                                    <div>
+                                        <h5 class="mb-1">UV Protection</h5>
+                                        <p class="text-muted mb-0">UPF 50+ sun protection</p>
+                                    </div>
+                                    <span class="premium-price">+₹249</span>
+                                </label>
+                                <div class="feature-details mt-2 collapse">
+                                    <ul class="feature-benefits">
+                                        <li>Blocks 98% of UV rays</li>
+                                        <li>Ideal for outdoor activities</li>
+                                        <li>Protects fabric colors</li>
+                                        <li>Maintains effectiveness after washing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add click handlers for customization options
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.design-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.design-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.form-check-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const details = this.closest('.form-check').querySelector('.feature-details');
+                if (this.checked) {
+                    details.classList.add('show');
+                } else {
+                    details.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

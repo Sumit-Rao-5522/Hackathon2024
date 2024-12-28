@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Attire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="public/images/logo.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            
+        }
+        a:link,    /* Normal unvisited link */
+        a:visited, /* Visited link */
+        a:hover,   /* Link when hovered */
+        a:active { /* Link when clicked */
+            color: #f8f8f9; /* Replace with your desired color */
+            text-decoration: none; /* Optional: remove underline */
+        }
+
+        
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid-item {
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .grid-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title:hover {
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card {
+            border: none;
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #ff4757;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .btn-cart {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            background-color: #ff6b6b;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #ff4757;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #ff4757;
+        }
+
+        .card {
+            border: none;
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .best-seller-badge {
+            position: absolute;
+            top: 10px;
+            left: -35px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(-45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .sales-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .rating {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            color: #ff4757;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .btn-cart {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            background-color: #ff6b6b;
+        }
+
+        .stock-status {
+            font-size: 0.9rem;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .low-stock {
+            color: #ffc107;
+        }
+
+        .category-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        /* Header Styles */
+.header {
+    background-color: #000;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-section {
+    flex: 0 0 auto;
+}
+
+.logo {
+    height: 40px;
+}
+
+.menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    flex: 0 1 300px;
+    margin: 0 2rem;
+}
+
+.search-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Icons Section Styles */
+.icons-section {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.icon-link {
+    color: white;
+    text-decoration: none;
+    position: relative;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.50rem;
+}
+
+/* Dropdown Menu Styles */
+.list-dropdown {
+    position: relative;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    margin-top: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-toggle:checked ~ .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item {
+    position: relative;
+}
+
+.notification-count {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    margin-left: auto;
+}
+
+/* Carousel Styles */
+.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+}
+
+.carousel-item:target {
+    transform: translateX(-100%);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
+.login-btn {
+    background-color: #007BFF; /* Blue background */
+    color: white;             /* White text */
+    border: none;             /* Remove borders */
+    padding: 10px 20px;       /* Add some padding */
+    font-size: 16px;          /* Set font size */
+    border-radius: 5px;       /* Rounded corners */
+    cursor: pointer;          /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover and active states */
+.login-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.login-btn:active {
+    transform: scale(0.98); /* Slightly shrink on click */
+}
+
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.carousel-indicators button.active {
+    background-color: white;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    z-index: 2;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    display: inline-block;
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <!-- Logo Section -->
+            <a href="/" class="logo-section">
+                <img src="public/images/logo.jpg" alt="Logo" class="logo">
+            </a>
+
+            <!-- Navigation Menu -->
+            <div class="menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#best-sellers" class="nav-link">Shop</a>
+                <a href="customizable.html" class="nav-link">Customize</a>
+                <a href="about.html" class="nav-link">About</a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <div class="input-group">
+                    <input type="text" class="form-control search-input" placeholder="Search anime merch...">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+
+           
+                <a href="profile.html" class="icon-link" title="Profile">
+                    <i class="bi bi-person-circle"></i>
+                </a>
+                <a href="cart.html" class="icon-link" title="Cart">
+                    <i class="bi bi-cart-fill"></i>
+                    <span class="cart-badge">0</span>
+                </a>
+                <a href="loginpage.html">
+                    <button class="login-btn">Login</button>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="slider">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 40.0000%;
+                    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                    border-radius: 8px; will-change: transform;">
+                    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGafUiJeac/qgZJb-gOZpjvyh66r4KJ_Q/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                    </div>
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGafUiJeac&#x2F;qgZJb-gOZpjvyh66r4KJ_Q&#x2F;view?utm_content=DAGafUiJeac&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener"></a>
+                 </div>
+                <div class="carousel-item">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 45.7143%;
+                    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                    border-radius: 8px; will-change: transform;">
+                     <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                       src="https://www.canva.com/design/DAGagY_RGUs/3RXQ3Uf1KO-92t_GShMeHQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                     </iframe>
+                   </div>
+                   <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGagY_RGUs&#x2F;3RXQ3Uf1KO-92t_GShMeHQ&#x2F;view?utm_content=DAGagY_RGUs&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Design</a>
+                </div>
+                <div class="carousel-item">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 45.7143%;
+                    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                     border-radius: 8px; will-change: transform;">
+                    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGagfCbsMA/h4qerCm_GjWvsWEnt_4Mhg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                    </div>
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGagfCbsMA&#x2F;h4qerCm_GjWvsWEnt_4Mhg&#x2F;view?utm_content=DAGagfCbsMA&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Design</a>                   
+                </div>
+                <div class="carousel-item">
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 45.7143%;
+                    padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                    border-radius: 8px; will-change: transform;">
+                    <iframe loading="lazy" style="position: absolute; width: 1600px; height: 500px; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGagcyudUU/cxcVmSyP-1-Z4Q5Um0pnsQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                    </div>
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGagcyudUU&#x2F;cxcVmSyP-1-Z4Q5Um0pnsQ&#x2F;view?utm_content=DAGagcyudUU&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Design</a>                   
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+    <section>
+        <div class="container mt-5" id="best-sellers">
+            <h2 class="section-title mb-5">Best Sellers</h2>
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="best-seller-badge">#1 Best Seller</div>
+                        <div class="sales-count">
+                            <i class="fas fa-fire"></i> 2.5k+ sold
+                        </div>
+                        <a href="itachi.html">
+
+                            <img src="public/images/NarutoMER2 (1).png" class="card-img-top" alt="Naruto Sage Mode T-Shirt">
+                        </a>
+                        <div class="category-badge">
+                            <i class="fas fa-tag"></i> Naruto
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Master Jiraya The Tod Sage T-Shirt</h5>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="rating-count">(1,234)</span>
+                            </div>
+                            <div class="stock-status">
+                                <i class="fas fa-check-circle"></i> In Stock
+                            </div>
+                            <p class="price mb-3">₹899</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="best-seller-badge">#2 Best Seller</div>
+                        <div class="sales-count">
+                            <i class="fas fa-fire"></i> 2.1k+ sold
+                        </div>
+                        <a href="itachi.html">
+                            
+                            <img src="public/images/gokugg1.png" class="card-img-top" alt="One Piece Luffy T-Shirt">
+                        </a>
+                        <div class="category-badge">
+                            <i class="fas fa-tag"></i> DRagon Ball
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Goku Ultra Instinct T-Shirt</h5>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="rating-count">(987)</span>
+                            </div>
+                            <div class="stock-status low-stock">
+                                <i class="fas fa-exclamation-circle"></i> Only 5 left
+                            </div>
+                            <p class="price mb-3">₹999</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="best-seller-badge">#3 Best Seller</div>
+                        <div class="sales-count">
+                            <i class="fas fa-fire"></i> 1.8k+ sold
+                        </div>
+                        <a href="itachi.html">
+
+                            <img src="public/images/one piece MER (6).png" class="card-img-top" alt="Attack on Titan Survey Corps Jacket">
+                        </a>
+                        <div class="category-badge">
+                            <i class="fas fa-tag"></i> One Piece
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Lufy Bounty Poster</h5>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="rating-count">(756)</span>
+                            </div>
+                            <div class="stock-status">
+                                <i class="fas fa-check-circle"></i> In Stock
+                            </div>
+                            <p class="price mb-3">₹1,199</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Add to cart animation
+            document.querySelectorAll('.btn-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.innerHTML = '<i class="fas fa-check me-2"></i>Added to Cart';
+                    this.style.backgroundColor = '#28a745';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>Add to Cart';
+                        this.style.backgroundColor = '#ff4757';
+                    }, 2000);
+                });
+            });
+        </script>
+    </section>
+
+    <section class="container my-5" id="featured-collections">
+        <h2 class="section-title text-center">Featured Collections</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                    <a href="naruto.html">
+                            <img src="public/images/Screenshot 2024-12-27 172415.png" alt="Naruto" height="330px">
+                            <h5 style="color: aliceblue;"><b>Naruto</b></h5>
+                        </a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                    <a href="naruto.html">
+                        <img src="public/images/AOT.png" alt="Attack on Titan" height="330px">
+                        <h5 style="color: aliceblue;">Attack on Titan</h5>
+                    </a>
+                        
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                   <a href="dragonball.html">
+
+                       <img src="public/images/Screenshot 2024-12-27 171903.png" alt="Dragon Ball" height="330px">
+                       <h5 style="color: aliceblue;">Dragon Ball</h5>
+                   </a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                   <a href="naruto.html">
+
+                       <img src="public/images/Screenshot 2024-12-27 172325.png" alt="Jujutsu Kaisen" height="330px">
+                        <h5 style="color: aliceblue;">Jujutsu Kaisen</h5>
+                   </a> 
+                </div>
+            </div>
+        </div>
+      <div class="row">
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                   <a href="dragonball.html">
+
+                       <img src="public/images/pokemon.png" alt="pokemon" height="330px">
+                        <h5 style="color: aliceblue;"><b>Pokemon</b></h5>
+                   </a> 
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                    <a href="naruto.html">
+
+                        <img src="public/images/one piece.png" alt="one piece" height="330px">
+                        <h5 style="color: aliceblue;"><b>One Piece</b></h5>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                   <a href="dragonball.html">
+
+                       <img src="public/images/deathnote.png" alt="deathnote" height="330px">
+                       <h5 style="color: aliceblue;"><b>deathnote</b></h5>
+                   </a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 fade-in">
+                <div class="grid-item" style="background-color: #000;">
+                    <a href="naruto.html">
+
+                        <img src="public/images/demon slayer.png" alt="Demon Slayer" height="330px">
+                        <h5 style="color: aliceblue;"><b>Demon Slayer</b></h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container mt-5" id="new-arrivals">
+            <h2 class="section-title mb-5">New Arrivals</h2>
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img  src="public/images/one piece MER (1).png" class="card-img-top" alt="Demon Slayer T-Shirt">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Tanjiro's Blade T-Shirt</h5>
+                            <p class="price mb-3">₹999</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="public/images/one piece MER (3).png" class="card-img-top" alt="Jujutsu Kaisen Hoodie">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Gojo's Domain Hoodie</h5>
+                            <p class="price mb-3">₹1599</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="public/images/one piece MER (6).png" class="card-img-top" alt="One Piece Jacket">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Luffy's Gear 5 Jacket</h5>
+                            <p class="price mb-3">₹1999</p>
+                            <button class="btn btn-cart w-100">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <script>
+        // Add sticky header effect
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal effect
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        fadeElements.forEach((el) => observer.observe(el));
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add to cart animation
+        document.querySelectorAll('.btn-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-check me-2"></i>Added to Cart';
+                this.style.backgroundColor = '#2ecc71';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>Add to Cart';
+                    this.style.backgroundColor = '#ff4757';
+                }, 2000);
+            });
+        });
+    </script>
+    
+
+    
+    
+    <footer class="footer bg-dark text-light pt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Company Info -->
+                <div class="col-md-4">
+                    <a href="about.html">
+
+                        <h5 class="mb-4" style="color: aqua;">About Us</h5>
+                    </a>
+                    <p>
+                        Anime Attire is your go-to destination for premium anime merchandise. 
+                        Explore our exclusive collections to embrace your fandom in style.
+                    </p>
+                    <p><strong>Email:</strong> support@animeattire.com</p>
+                    <p><strong>Phone:</strong> +91 85667 07890</p>
+                </div>
+    
+                <!-- Customer Support -->
+                <div class="col-md-3">
+                    <h5 class="mb-4" style="color: aqua;">Customer Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">FAQ</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">Order Tracking</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Quick Links -->
+                <div class="col-md-2">
+                    <h5 class="mb-4" style="color: aqua;">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                        <li><a href="#best-sellers" class="text-light text-decoration-none">Shop</a></li>
+                        <li><a href="#new-arrivals" class="text-light text-decoration-none">New Arrivals</a></li>
+                        <li><a href="#best-sellers" class="text-light text-decoration-none">Best Sellers</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Social Media -->
+                <div class="col-md-3">
+                    <h5 class="mb-4" style="color: aqua;">Follow Us</h5>
+                    <p>Stay connected with us on social media!</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="bi bi-facebook fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-twitter-x fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+    
+            <hr class="my-4 border-secondary">
+    
+            <div class="row">
+                <div class="col text-center">
+                    <p class="mb-0">&copy; 2024 Anime Attire. All Rights Reserved.</p>
+                    <small>Designed with ❤️ by Anime Fans</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Add FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+</body>
+</html>
+
